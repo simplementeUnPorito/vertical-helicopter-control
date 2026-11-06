@@ -52,7 +52,7 @@ Siempre se usan **16 floats** → `16 * 4 = 64 bytes`.
 * `coeffs(7..12)` = denominador (6)
 * `coeffs(13..16)` = reservados (flags / uso futuro)
 
-### State‑Space (modos 1..4) — 2 estados
+### State‑Space (modos 1..4): 2 estados
 
 * `coeffs(1..4)`   = `A11 A12 A21 A22`
 * `coeffs(5..6)`   = `B1  B2`
