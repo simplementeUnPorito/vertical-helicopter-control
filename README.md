@@ -1,7 +1,6 @@
-<p align="center"><img src="docs/img/hero-plant.jpg" width="360" alt="Vertical helicopter test rig: wooden frame with guide rods and the motor body at the base"></p>
-<h1 align="center">Vertical Helicopter Altitude Control: PID to LQG</h1>
-<p align="center"><b>Digital altitude control of a single-axis, open-loop unstable vertical helicopter, comparing classical and optimal designs on real hardware.</b><br>
-<img src="https://img.shields.io/badge/PSoC-5LP-1f6feb"> <img src="https://img.shields.io/badge/MATLAB-System%20Identification-orange"> <img src="https://img.shields.io/badge/Control-LQR%20%7C%20LQG%20%7C%20Kalman-blueviolet"> <img src="https://img.shields.io/badge/Sensor-TFmini%20Plus%20LiDAR-green"> <img src="https://img.shields.io/badge/Report-LaTeX%20(IEEEtran)-lightgrey"></p>
+<p align="center"><img src="docs/img/banner.svg" width="100%" alt="Vertical Helicopter Altitude Control"></p>
+
+<p align="center"><img src="https://img.shields.io/badge/PSoC-5LP-1f6feb"> <img src="https://img.shields.io/badge/MATLAB-System%20Identification-orange"> <img src="https://img.shields.io/badge/Control-LQR%20%7C%20LQG%20%7C%20Kalman-blueviolet"> <img src="https://img.shields.io/badge/Sensor-TFmini%20Plus%20LiDAR-green"> <img src="https://img.shields.io/badge/Report-LaTeX%20(IEEEtran)-lightgrey"></p>
 <p align="center"><a href="#english">English</a> · <a href="#español">Español</a></p>
 
 <p align="center"><a href="https://www.youtube.com/watch?v=UubJcvpHcn4"><img src="https://img.youtube.com/vi/UubJcvpHcn4/hqdefault.jpg" width="480" alt="Video: closed-loop altitude control on the real rig"></a><br><sub>▶ Demo video: closed-loop altitude control on the real rig (YouTube)</sub></p>
@@ -10,6 +9,9 @@
 
 ### Overview
 A brushless motor with propeller, driven through an ESC, lifts a moving body along three vertical guide rods. Its height is measured by a TFmini Plus LiDAR and regulated by a PSoC 5LP. The identified plant is third order, integrating, open-loop unstable and non-minimum-phase, with strict actuator saturation, variable rail friction and battery discharge. The project covers the full chain: mechanical design, sensor calibration, system identification, controller design in MATLAB, embedded implementation on the PSoC, and experimental comparison of classical and modern controllers on the physical plant. The complete write-up (in Spanish) is in [`docs/technical-report.pdf`](docs/technical-report.pdf).
+
+
+<p align="center"><img src="docs/img/hero-plant-enhanced.jpg" width="360" alt="Vertical helicopter test rig: wooden frame with guide rods and the motor body at the base"><br><sub>Test rig: brushless motor body on three vertical guide rods, TFmini Plus LiDAR at the base.</sub></p>
 
 ### Highlights
 - Identified continuous model, simplified to `G(s) = -0.12107 (s-14)(s+10.62) / (s (s^2 + 5.61 s + 14.02))`, valid for a PWM range of 1100-1700 us; a right-half-plane zero reproduces the initial inverse response seen in step tests.
