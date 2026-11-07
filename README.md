@@ -86,7 +86,6 @@ Experimental runs on the real plant (output `y` in cm, control effort `u` as PWM
 <p align="center"><img src="docs/img/lqr-experiment.png" width="760" alt="LQR experiment"><br><em>LQR with state estimator: reference steps tracked by the real plant.</em></p>
 <p align="center"><img src="docs/img/pole-placement-integrator-experiment.png" width="760" alt="Pole placement with integrator experiment"><br><em>Pole placement with integral action and current observer: hover-point search followed by reference steps.</em></p>
 <p align="center"><img src="docs/img/lqgi-experiment.png" width="760" alt="LQG with integrator experiment"><br><em>LQG with integrator (LQR + Kalman + integral action), the best-performing design in the report.</em></p>
-<p align="center"><img src="docs/img/matlab-gui.png" width="620" alt="MATLAB control GUI"><br><em>MATLAB GUI: connection, mode selection, coefficient upload, start/stop and live u/y streaming.</em></p>
 
 Detailed simulation-versus-experiment comparisons, Bode and root-locus designs, and the discussion of each method are in the report.
 
