@@ -90,6 +90,11 @@ Experimental runs on the real plant (output `y` in cm, control effort `u` as PWM
 
 Detailed simulation-versus-experiment comparisons, Bode and root-locus designs, and the discussion of each method are in the report.
 
+### Prototype photos
+<table><tr>
+<td align="center" width="33%"><img src="docs/img/photos/01-rig-motor-rod.jpg" width="280" alt="Vertical rig with brushless motor and propeller"><br><sub>Vertical rig with brushless motor and propeller</sub></td><td align="center" width="33%"><img src="docs/img/photos/02-rig-overview.jpg" width="280" alt="Wooden vertical rig in the lab"><br><sub>Wooden vertical rig in the lab</sub></td><td align="center" width="33%"><img src="docs/img/photos/03-brushless-motor.jpg" width="280" alt="Brushless motor with propeller adapter"><br><sub>Brushless motor with propeller adapter</sub></td>
+</tr></table>
+
 ### Team & credits
 Developed by Elías David Álvarez Martínez and Tania Romero at Universidad Católica "Nuestra Señora de la Asunción" (Paraguay), Electronics Engineering, 2026.
 
@@ -138,6 +143,11 @@ Ver el árbol en la sección en inglés (`docs/`, `firmware/`, `matlab/`, `hardw
 
 ### Resultados
 Las figuras de la sección en inglés muestran ensayos experimentales en la planta real (PID, LQR con estimador, ubicación de polos con integrador y LQG con integrador), además del mapa de polos y ceros de la planta discretizada y la GUI de MATLAB. Las comparaciones entre simulación y experimento se detallan en el informe.
+
+### Fotos del prototipo
+<table><tr>
+<td align="center" width="33%"><img src="docs/img/photos/01-rig-motor-rod.jpg" width="280" alt="Vertical rig with brushless motor and propeller"><br><sub>Vertical rig with brushless motor and propeller</sub></td><td align="center" width="33%"><img src="docs/img/photos/02-rig-overview.jpg" width="280" alt="Wooden vertical rig in the lab"><br><sub>Wooden vertical rig in the lab</sub></td><td align="center" width="33%"><img src="docs/img/photos/03-brushless-motor.jpg" width="280" alt="Brushless motor with propeller adapter"><br><sub>Brushless motor with propeller adapter</sub></td>
+</tr></table>
 
 ### Equipo y créditos
 Desarrollado por Elías David Álvarez Martínez y Tania Romero en la Universidad Católica "Nuestra Señora de la Asunción" (Paraguay), Ingeniería Electrónica, 2026.
