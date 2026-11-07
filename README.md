@@ -1,6 +1,6 @@
 <p align="center"><img src="docs/img/banner.svg" width="100%" alt="Vertical Helicopter Altitude Control"></p>
 
-<p align="center"><img src="https://img.shields.io/badge/PSoC-5LP-1f6feb"> <img src="https://img.shields.io/badge/MATLAB-System%20Identification-orange"> <img src="https://img.shields.io/badge/Control-LQR%20%7C%20LQG%20%7C%20Kalman-blueviolet"> <img src="https://img.shields.io/badge/Sensor-TFmini%20Plus%20LiDAR-green"> <img src="https://img.shields.io/badge/Report-LaTeX%20(IEEEtran)-lightgrey"></p>
+<p align="center"><img src="https://img.shields.io/badge/Year-2025--2026-555"> <img src="https://img.shields.io/badge/PSoC-5LP-1f6feb"> <img src="https://img.shields.io/badge/MATLAB-System%20Identification-orange"> <img src="https://img.shields.io/badge/Control-LQR%20%7C%20LQG%20%7C%20Kalman-blueviolet"> <img src="https://img.shields.io/badge/Sensor-TFmini%20Plus%20LiDAR-green"> <img src="https://img.shields.io/badge/Report-LaTeX%20(IEEEtran)-lightgrey"></p>
 <p align="center"><a href="#english">English</a> · <a href="#español">Español</a></p>
 
 <p align="center"><a href="https://www.youtube.com/watch?v=UubJcvpHcn4"><img src="https://img.youtube.com/vi/UubJcvpHcn4/hqdefault.jpg" width="480" alt="Video: closed-loop altitude control on the real rig"></a><br><sub>▶ Demo video: closed-loop altitude control on the real rig (YouTube)</sub></p>
