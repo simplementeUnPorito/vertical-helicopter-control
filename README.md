@@ -8,7 +8,7 @@
 ## English
 
 ### Overview
-A brushless motor with propeller, driven through an ESC, lifts a moving body along three vertical guide rods. Its height is measured by a TFmini Plus LiDAR and regulated by a PSoC 5LP. The identified plant is third order, integrating, open-loop unstable and non-minimum-phase, with strict actuator saturation, variable rail friction and battery discharge. The project covers the full chain: mechanical design, sensor calibration, system identification, controller design in MATLAB, embedded implementation on the PSoC, and experimental comparison of classical and modern controllers on the physical plant. The complete write-up (in Spanish) is in [`docs/technical-report.pdf`](docs/technical-report.pdf).
+A brushless motor and propeller, driven through an ESC, lift a moving body along three vertical guide rods. A TFmini Plus LiDAR measures its height, and a PSoC 5LP regulates it. The identified plant is third order, integrating, open-loop unstable and non-minimum-phase, with strict actuator saturation, variable rail friction and battery discharge. The work includes mechanical design, sensor calibration, system identification, controller design in MATLAB, embedded implementation on the PSoC, and experimental comparison of classical and modern controllers on the physical plant. The full report (in Spanish) is in [`docs/technical-report.pdf`](docs/technical-report.pdf).
 
 
 <p align="center"><img src="docs/img/hero-plant-enhanced.jpg" width="360" alt="Vertical helicopter test rig: wooden frame with guide rods and the motor body at the base"><br><sub>Test rig: brushless motor body on three vertical guide rods, TFmini Plus LiDAR at the base.</sub></p>
@@ -106,7 +106,7 @@ MIT, see [`LICENSE`](LICENSE). The report and figures are shared for reference.
 ## Español
 
 ### Descripción general
-Un motor brushless con hélice, accionado mediante un ESC, eleva un cuerpo móvil guiado por tres varillas verticales. La altura se mide con un LiDAR TFmini Plus y se regula con un PSoC 5LP. La planta identificada es de tercer orden, integradora, inestable en lazo abierto y de fase no mínima, con saturación estricta del actuador, fricción variable en los rieles y descarga de batería. El proyecto abarca toda la cadena: diseño mecánico, calibración del sensor, identificación de sistemas, diseño de controladores en MATLAB, implementación embebida en el PSoC y comparación experimental de controladores clásicos y modernos sobre la planta física. El informe completo está en [`docs/technical-report.pdf`](docs/technical-report.pdf).
+Un motor brushless con hélice, accionado mediante un ESC, eleva un cuerpo móvil guiado por tres varillas verticales. Un LiDAR TFmini Plus mide la altura y un PSoC 5LP la regula. La planta identificada es de tercer orden, integradora, inestable en lazo abierto y de fase no mínima, con saturación estricta del actuador, fricción variable en los rieles y descarga de batería. El trabajo incluye el diseño mecánico, la calibración del sensor, la identificación de sistemas, el diseño de controladores en MATLAB, la implementación embebida en el PSoC y la comparación experimental de controladores clásicos y modernos sobre la planta física. El informe completo está en [`docs/technical-report.pdf`](docs/technical-report.pdf).
 
 ### Aspectos destacados
 - Modelo continuo identificado, simplificado a `G(s) = -0,12107 (s-14)(s+10,62) / (s (s^2 + 5,61 s + 14,02))`, válido para PWM entre 1100 y 1700 us; el cero en el semiplano derecho reproduce la respuesta inversa inicial observada en los ensayos al escalón.
