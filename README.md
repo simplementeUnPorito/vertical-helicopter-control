@@ -107,16 +107,30 @@ MIT, see [`LICENSE`](LICENSE). The report and figures are shared for reference.
 ### Descripción general
 Un motor brushless con hélice, accionado mediante un ESC, eleva un cuerpo móvil guiado por tres varillas verticales. Un LiDAR TFmini Plus mide la altura y un PSoC 5LP la regula. La planta identificada es de tercer orden, integradora, inestable en lazo abierto y de fase no mínima, con saturación estricta del actuador, fricción variable en los rieles y descarga de batería. El trabajo incluye el diseño mecánico, la calibración del sensor, la identificación de sistemas, el diseño de controladores en MATLAB, la implementación embebida en el PSoC y la comparación experimental de controladores clásicos y modernos sobre la planta física. El informe completo está en [`docs/technical-report.pdf`](docs/technical-report.pdf).
 
+<p align="center"><img src="docs/img/hero-plant-enhanced.jpg" width="360" alt="Banco de pruebas del helicóptero vertical: estructura de madera con varillas guía y cuerpo del motor en la base"><br><sub>Banco de pruebas: cuerpo con motor brushless sobre tres varillas guía verticales y LiDAR TFmini Plus en la base.</sub></p>
+
 ### Aspectos destacados
 - Modelo continuo identificado, simplificado a `G(s) = -0,12107 (s-14)(s+10,62) / (s (s^2 + 5,61 s + 14,02))`, válido para PWM entre 1100 y 1700 us; el cero en el semiplano derecho reproduce la respuesta inversa inicial observada en los ensayos al escalón.
 - Familias de controladores implementadas y probadas en la planta real: PID digital (forma de Åström con anti-windup), lugar de las raíces, respuesta en frecuencia (Bode), síntesis directa, ubicación de polos con estimador de estados (predictor y actual) y control óptimo (LQR, LQR con integrador, LQG con filtro de Kalman).
 - Según las conclusiones del informe, LQR + filtro de Kalman + integrador dio el mejor desempeño global; los métodos clásicos toleraron mejor los errores de modelo.
 - Firmware con cinco modos seleccionables en tiempo de ejecución (función de transferencia y espacio de estados con observador predictor/actual, con o sin integrador); los coeficientes se cargan desde MATLAB mediante un protocolo UART con eco y ACK por palabra.
-- Estimación automática del punto de hover antes de cada sesión en lazo cerrado y parada de emergencia por hardware que deshabilita el PWM del ESC.
+- Estimación automática del punto de sustentación antes de cada sesión en lazo cerrado (rampa PWM a 1 kHz, detección del primer movimiento sostenido) y parada de emergencia por hardware que deshabilita el PWM del ESC.
 - Calibración de distancia del TFmini Plus (ajustes polinomiales y logarítmicos exportados a cabeceras C) y estimación de covarianzas de ruido para el filtro de Kalman.
 
 ### Arquitectura del sistema
-Ver el diagrama de flujo en la sección en inglés: MATLAB (diseño, GUI, telemetría) se comunica por UARTP con el PSoC 5LP, que lee la altura del TFmini Plus, ejecuta la ley de control y genera el PWM hacia el ESC y el motor; un botón de parada de emergencia deshabilita el PWM por hardware.
+```mermaid
+flowchart LR
+    PC["MATLAB<br/>diseño, GUI, telemetría"] -- "UARTP: modo, coeficientes, referencia" --> MCU["PSoC 5LP<br/>lazo de control (TF / espacio de estados)"]
+    MCU -- "flujo u_k, y_k" --> PC
+    LIDAR["TFmini Plus<br/>LiDAR (UART)"] -- "altura y [cm]" --> MCU
+    MCU -- "PWM 1000-2000 us" --> ESC["ESC"]
+    ESC --> MOT["Motor brushless + hélice"]
+    MOT -- "empuje" --> PLANT["Cuerpo móvil sobre varillas verticales"]
+    PLANT -- "altura" --> LIDAR
+    STOP["Botón de parada de emergencia"] -. "deshabilita PWM" .-> ESC
+```
+
+<p align="center"><img src="docs/img/block-diagram.png" width="780" alt="Diagrama de bloques del control con fuentes de ruido"><br><em>Diagrama de bloques del lazo implementado, incluidas las fuentes de ruido de proceso, medición y cálculo numérico.</em></p>
 
 ### Hardware
 | Componente | Función |
@@ -132,20 +146,48 @@ Ver el diagrama de flujo en la sección en inglés: MATLAB (diseño, GUI, teleme
 
 La planta está cableada como montaje de prototipo; no se usó una PCB propia.
 
+<p align="center"><img src="docs/img/moving-body.jpg" width="300" alt="Cuerpo móvil visto desde arriba"> <img src="docs/img/cad-arm-and-base.png" width="420" alt="CAD del brazo, cubo y abrazadera"><br><em>Cuerpo móvil (izquierda) y brazo, cubo y abrazadera impresos en 3D y preparados para impresión (derecha).</em></p>
+
 ### Estructura del repositorio
-Ver el árbol en la sección en inglés (`docs/`, `firmware/`, `matlab/`, `hardware/cad/`).
+```
+.
+├── docs/
+│   ├── technical-report.pdf        # Informe completo (español, 30 páginas, IEEEtran)
+│   ├── report-src/                 # Fuentes LaTeX, bibliografía y figuras
+│   └── img/                        # Figuras utilizadas en este README
+├── firmware/
+│   ├── psoc/autoDron.cydsn/        # Proyecto final PSoC Creator (control, driver TFmini, PWM ESC, UARTP)
+│   └── arduino/sensor-bringup/     # Sketch Arduino de prueba del sensor
+├── matlab/
+│   ├── controller-design/          # Cálculo de ganancias, simulación de todos los controladores, auxiliares de diseño discreto
+│   ├── identification/             # Scripts de identificación de sistemas y validación del modelo
+│   ├── sensor-calibration/         # Calibración del TFmini Plus y exportación de cabeceras C
+│   ├── host-interface/             # API UARTP para MATLAB y GUI de control
+│   └── data/                       # Modelo identificado, ensayos en lazo abierto, datos experimentales por controlador, planillas
+├── hardware/cad/                   # Piezas STL / 3MF (brazos, pivote, tapas, soporte de batería, riel y bloque)
+└── LICENSE
+```
 
 ### Primeros pasos
-- **Informe:** abrir `docs/technical-report.pdf`; para recompilar, ejecutar `pdflatex` y `bibtex` sobre `docs/report-src/document.tex`.
-- **Firmware:** abrir `firmware/psoc/autoDron.cydsn/autoDron-000.cywrk` con PSoC Creator 4.x. El proyecto referencia las fuentes de CMSIS-DSP en `third_party/CMSIS-DSP/` en la raíz del repositorio (descargar de [ARM-software/CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) y [CMSIS_5](https://github.com/ARM-software/CMSIS_5)). `control_app.h` y `uartp_sw.h` provienen de la iteración anterior del mismo firmware.
-- **MATLAB:** agregar `matlab/` al path; usar `matlab/host-interface` para cargar y ejecutar un controlador y `matlab/controller-design/simulacion_todos_controladores.m` para simular todos los diseños. Varios scripts conservan rutas absolutas originales en `load(...)`; ajustarlas a `matlab/data/`.
+- **Informe:** abrir `docs/technical-report.pdf`. Para recompilar, ejecutar `pdflatex` y `bibtex` sobre `docs/report-src/document.tex` (paquetes: IEEEtran, babel Spanish, siunitx, listings, listingsutf8, subfig).
+- **Firmware:** abrir `firmware/psoc/autoDron.cydsn/autoDron-000.cywrk` con PSoC Creator 4.x (el proyecto se guardó con 4.4). El proyecto referencia las fuentes CMSIS-DSP (`arm_math.h`, `arm_add_f32.c`, `arm_dot_prod_f32.c`, `arm_scale_f32.c`) dentro de `third_party/CMSIS-DSP/` en la raíz del repositorio. Se obtienen de [ARM-software/CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) y, para las rutas de inclusión, de [CMSIS_5](https://github.com/ARM-software/CMSIS_5). Programar el PSoC 5LP con MiniProg3 o KitProg. `control_app.h` y `uartp_sw.h` se tomaron de la iteración anterior del firmware del mismo proyecto, porque la carpeta final no los contenía.
+- **MATLAB:** agregar `matlab/` a la ruta. Usar `matlab/host-interface` (`uartp_open`, `uartp_setmode`, `uartp_send_coeffs`, `uartp_init`, `uartp_stop`; consultar su README) para cargar y ejecutar un controlador, y `matlab/controller-design/simulacion_todos_controladores.m` para simular todos los diseños. Varios scripts conservan las rutas absolutas originales en llamadas `load(...)`; ajustarlas a `matlab/data/`.
+- Algunos archivos `.mat` de las carpetas de trabajo originales estaban vacíos en la fuente y no se incluyen.
 
 ### Resultados
-Las figuras de la sección en inglés muestran ensayos experimentales en la planta real (PID, LQR con estimador, ubicación de polos con integrador y LQG con integrador), además del mapa de polos y ceros de la planta discretizada y la GUI de MATLAB. Las comparaciones entre simulación y experimento se detallan en el informe.
+Ensayos experimentales en la planta real (salida `y` en cm, esfuerzo de control `u` como offset de PWM en us, frente al índice de muestra; la frecuencia de muestreo depende del diseño, de 50 Hz a 1 kHz).
+
+<p align="center"><img src="docs/img/plant-pole-zero.png" width="360" alt="Mapa de polos y ceros discretos de la planta"><br><em>Mapa de polos y ceros de la planta discretizada: los polos y ceros se agrupan cerca de z = 1.</em></p>
+<p align="center"><img src="docs/img/pid-experiment.png" width="560" alt="Experimento con PID"><br><em>PID digital: escalones de referencia con transitorios oscilatorios y esfuerzo acotado.</em></p>
+<p align="center"><img src="docs/img/lqr-experiment.png" width="760" alt="Experimento con LQR"><br><em>LQR con estimador de estados: seguimiento de escalones de referencia en la planta real.</em></p>
+<p align="center"><img src="docs/img/pole-placement-integrator-experiment.png" width="760" alt="Experimento de ubicación de polos con integrador"><br><em>Ubicación de polos con acción integral y observador actual: búsqueda del punto de sustentación seguida por escalones de referencia.</em></p>
+<p align="center"><img src="docs/img/lqgi-experiment.png" width="760" alt="Experimento LQG con integrador"><br><em>LQG con integrador (LQR + Kalman + acción integral), el diseño con mejor desempeño según el informe.</em></p>
+
+El informe contiene comparaciones detalladas entre simulación y experimento, diseños por Bode y lugar de las raíces, y la discusión de cada método.
 
 ### Fotos del prototipo
 <table><tr>
-<td align="center" width="33%"><img src="docs/img/photos/01-rig-motor-rod.jpg" width="280" alt="Vertical rig with brushless motor and propeller"><br><sub>Vertical rig with brushless motor and propeller</sub></td><td align="center" width="33%"><img src="docs/img/photos/02-rig-overview.jpg" width="280" alt="Wooden vertical rig in the lab"><br><sub>Wooden vertical rig in the lab</sub></td><td align="center" width="33%"><img src="docs/img/photos/03-brushless-motor.jpg" width="280" alt="Brushless motor with propeller adapter"><br><sub>Brushless motor with propeller adapter</sub></td>
+<td align="center" width="33%"><img src="docs/img/photos/01-rig-motor-rod.jpg" width="280" alt="Banco vertical con motor brushless y hélice"><br><sub>Banco vertical con motor brushless y hélice</sub></td><td align="center" width="33%"><img src="docs/img/photos/02-rig-overview.jpg" width="280" alt="Banco vertical de madera en el laboratorio"><br><sub>Banco vertical de madera en el laboratorio</sub></td><td align="center" width="33%"><img src="docs/img/photos/03-brushless-motor.jpg" width="280" alt="Motor brushless con adaptador de hélice"><br><sub>Motor brushless con adaptador de hélice</sub></td>
 </tr></table>
 
 ### Equipo y créditos
