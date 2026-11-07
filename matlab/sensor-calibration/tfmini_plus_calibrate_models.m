@@ -2,7 +2,7 @@ function S = tfmini_plus_calibrate_models(xlsx_path, sheet)
 %TFMINI_PLUS_CALIBRATE_MODELS  Calibra modelos de calibración TFmini Plus desde Excel.
 %
 % Uso:
-%   S = tfmini_plus_calibrate_models("D:\auto\vertical-helicopter-control\DatosLeidos.xlsx")
+%   S = tfmini_plus_calibrate_models("<DATA_ROOT>/sensor-readings.xlsx")
 %   S = tfmini_plus_calibrate_models()  % abre selector
 %
 % Espera columnas (headers originales en Excel):

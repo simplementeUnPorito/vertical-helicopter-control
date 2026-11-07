@@ -1,4 +1,5 @@
-xlsx_path = "D:\auto\vertical-helicopter-control\DatosLeidos.xlsx";
+xlsx_path = fullfile(fileparts(mfilename('fullpath')), '..', 'data', ...
+                     'sensor-readings.xlsx');
 T = readtable(xlsx_path, "Sheet", 1, "VariableNamingRule","preserve");
 
 % Si tus headers son estos:

@@ -1,7 +1,8 @@
 close all; clear; clc;
 
-S = load("D:\auto\vertical-helicopter-control\Matlab\planta (1).mat");
-whos('-file',"D:\auto\vertical-helicopter-control\Matlab\planta (1).mat")
+plantModelPath = ""; % Set to the plant-model MAT file; the legacy source file is not included.
+S = load(plantModelPath);
+whos('-file', plantModelPath)
 
 % Elegí la planta correcta según lo que exista
 if isfield(S,'plantaC')

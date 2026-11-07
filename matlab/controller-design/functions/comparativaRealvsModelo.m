@@ -16,7 +16,8 @@ clear; close all; clc
 % PARÁMETROS (EDITÁ ACÁ)
 %% =========================
 PLANTA_MAT_PATH  = 'planta (1).mat';
-DATA_MAT_PATH    = 'D:\GitHub\auto\vertical-helicopter-control\Matlab\Compensadores\BODE_practico.mat';
+DATA_MAT_PATH    = fullfile(fileparts(mfilename('fullpath')), '..', '..', ...
+                            'data', 'controller-results', 'BODE_practico.mat');
 
 FsHz             = 1000;   % <-- tu frecuencia de muestreo
 C2D_METHOD       = 'zoh';  % fijo zoh como pediste (podés cambiar si querés)

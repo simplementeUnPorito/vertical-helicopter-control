@@ -1,7 +1,8 @@
 close all
 clear all
 clc
-load("D:\auto\vertical-helicopter-control\Matlab\modeloSimplificado (1).mat");
+controllerModelPath = ""; % Set to the simplified-model MAT file; it is not included in this repository.
+load(controllerModelPath);
 
 
 Ts = 1/1000;

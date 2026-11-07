@@ -13,7 +13,8 @@ close all; clear; clc
 
 %% ===== rutas =====
 mat_planta = 'planta (1).mat';
-mat_datos  = 'D:\GitHub\auto\vertical-helicopter-control\Matlab\PruebasEmpiricas\datos.mat';
+mat_datos  = fullfile(fileparts(mfilename('fullpath')), '..', '..', ...
+                      'data', 'open-loop-tests', 'datos.mat');
 
 Ts_target = 0.01;                 % 100 Hz
 
